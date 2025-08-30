@@ -1,30 +1,57 @@
 package com.example.coursesapp
 
+
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Home
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.material3.Button
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.NavigationBar
+import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.navigation.NavDestination.Companion.hierarchy
-import androidx.navigation.NavGraph.Companion.findStartDestination
-import androidx.navigation.NavHostController
+import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
-import androidx.navigation.compose.rememberNavController
-import com.example.account.presentation.FavouriteScreen
+import com.example.account.presentation.AccountScreen
+import com.example.coursesapp.components.BottomNavigationBar
+import com.example.coursesapp.navigation.AppNavGraph
+import com.example.coursesapp.navigation.Graph
+import com.example.coursesapp.navigation.NavigationState
+import com.example.coursesapp.navigation.Screen
+import com.example.coursesapp.navigation.rememberNavigationState
 import com.example.coursesapp.ui.theme.CoursesAppTheme
-import com.example.favourite.presentation.AccountScreen
+import com.example.favourite.presentation.FavouriteScreen
 import com.example.home.presentation.HomeScreen
+
+private const val TAG = "MainActivity"
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,65 +68,59 @@ class MainActivity : ComponentActivity() {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainScreen() {
-    val navController = rememberNavController()
+    Log.d(TAG, "MainScreen composed")
+    val navigationState = rememberNavigationState()
+    val navBackStackEntry by navigationState.navHostController.currentBackStackEntryAsState()
+
+    val currentRoute = navBackStackEntry?.destination?.route ?: Screen.HomeScreen.route
+    Log.d(TAG, "Current route: $currentRoute")
+
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         bottomBar = {
-            BottomNavigationBar(navController = navController)
+            Log.d(TAG, "Showing BottomBar for route: $currentRoute")
+            BottomNavigationBar(
+                navigationState = navigationState,
+                currentRoute = currentRoute
+            )
+
         }
     ) { paddingValues ->
-        NavHost(
-            navController = navController,
-            startDestination = "home",
-            modifier = Modifier.padding(paddingValues)
-        ) {
-            composable("home") {
-                HomeScreen()
-            }
-            composable("favourite") {
+        AppNavGraph(
+            navController = navigationState.navHostController,
+            homeScreenContent = {
+                HomeScreen(paddingValues, navigateDetailCoures = {
+                    navigationState.navigateTo(Screen.CourseDetailScreen.route)
+                })
+            },
+            favouriteScreenContent = {
                 FavouriteScreen()
-            }
-            composable("account") {
+            },
+            accountScreenContent = {
                 AccountScreen()
-            }
-        }
+            },
+            courseDetailScreen = {
+                CourseDetailScreen("1", onBackClick = { navigationState.navigateBack() })
+            },
+        )
     }
 }
+
 
 @Composable
-fun BottomNavigationBar(navController: NavHostController) {
-    val items = listOf(
-        BottomNavItem("home", "Главная", Icons.Default.Home),
-        BottomNavItem("favourite", "Избранное", Icons.Default.Favorite),
-        BottomNavItem("account", "Аккаунт", Icons.Default.AccountCircle)
-    )
-
-    val navBackStackEntry by navController.currentBackStackEntryAsState()
-    val currentDestination = navBackStackEntry?.destination
-
-    NavigationBar {
-        items.forEach { item ->
-            NavigationBarItem(
-                icon = { Icon(item.icon, contentDescription = item.label) },
-                label = { Text(item.label) },
-                selected = currentDestination?.hierarchy?.any { it.route == item.route } == true,
-                onClick = {
-                    navController.navigate(item.route) {
-                        popUpTo(navController.graph.findStartDestination().id) {
-                            saveState = true
-                        }
-                        launchSingleTop = true
-                        restoreState = true
-                    }
-                }
-            )
+fun CourseDetailScreen(courseId: String, onBackClick: () -> Unit) {
+    Column(
+        modifier = Modifier.fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
+    ) {
+        Text("Детали курса: $courseId")
+        Spacer(modifier = Modifier.height(16.dp))
+        Button(onClick = onBackClick) {
+            Text("Назад")
         }
     }
 }
 
-data class BottomNavItem(
-    val route: String,
-    val label: String,
-    val icon: ImageVector
-)
+

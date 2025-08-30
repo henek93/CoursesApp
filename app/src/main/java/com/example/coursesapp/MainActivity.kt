@@ -1,6 +1,5 @@
 package com.example.coursesapp
 
-
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -33,7 +32,6 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-
 @Composable
 fun CourseDetailScreen(courseId: String, onBackClick: () -> Unit) {
     Column(
@@ -43,10 +41,6 @@ fun CourseDetailScreen(courseId: String, onBackClick: () -> Unit) {
     ) {
         Text("Детали курса: $courseId")
         Spacer(modifier = Modifier.height(16.dp))
-        Button(onClick = onBackClick) {
-            Text("Назад")
-        }
+        Button(onClick = onBackClick) { Text("Назад") }
     }
 }
-
-

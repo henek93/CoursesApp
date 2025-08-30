@@ -77,7 +77,7 @@ fun BottomNavigationBar(
                 onClick = {
                     if (selectedItem != index) {
                         Log.d(TAG, "Navigating to ${item.label} - ${item.route}")
-                        navigationState.navigateToBottomNavItem(item.route)
+                        navigationState.navigateTo(item.route)
                     } else {
                         Log.d(TAG, "Item ${item.label} already selected")
                     }

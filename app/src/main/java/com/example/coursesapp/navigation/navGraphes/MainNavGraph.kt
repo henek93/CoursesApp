@@ -18,39 +18,39 @@ fun NavGraphBuilder.mainNavGraph(
 ) {
     Log.d(TAG, "Building mainNavGraph with startDestination: ${Screen.HomeScreen.route}")
     navigation(
-        startDestination = Screen.HomeScreen.route,
+        startDestination = Graph.HomeGraph.route,
         route = Graph.MainGraph.route
     ) {
 
-        composable(
-            route = Screen.HomeScreen.route,
-        ) {
-            homeScreenContent()
-        }
-
-        composable(route = Screen.FavouriteScreen.route) {
-            favouriteScreenContent()
-        }
-        composable(route = Screen.AccountScreen.route) {
-            accountScreenContent()
-        }
-        composable(route = Screen.CourseDetailScreen.route) {
-            courseDetailScreen()
-        }
-
-
-//        HomeNavGraph(
-//            homeScreenContent = homeScreenContent,
-//            courseDetailScreen = courseDetailScreen
-//        )
+//        composable(
+//            route = Screen.HomeScreen.route,
+//        ) {
+//            homeScreenContent()
+//        }
 //
-//        FavouriteNavGraph(
-//            favouriteScreenContent = favouriteScreenContent
-//        )
-//
-//        AccountNavGraph(
-//            accountScreenContent = accountScreenContent
-//        )
+//        composable(route = Screen.FavouriteScreen.route) {
+//            favouriteScreenContent()
+//        }
+//        composable(route = Screen.AccountScreen.route) {
+//            accountScreenContent()
+//        }
+//        composable(route = Screen.CourseDetailScreen.route) {
+//            courseDetailScreen()
+//        }
+
+
+        HomeNavGraph(
+            homeScreenContent = homeScreenContent,
+            courseDetailScreen = courseDetailScreen
+        )
+
+        FavouriteNavGraph(
+            favouriteScreenContent = favouriteScreenContent
+        )
+
+        AccountNavGraph(
+            accountScreenContent = accountScreenContent
+        )
 
     }
 }

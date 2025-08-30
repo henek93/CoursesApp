@@ -9,6 +9,7 @@ import com.example.auth.state.AuthState
 import com.example.auth.viewModel.AuthViewModel
 import com.example.authorization.presentation.AuthorizationScreen
 import com.example.coursesapp.presentation.components.MainScreenContentAndNavGraph
+import com.example.ui.theme.CoursesAppTheme
 
 private const val ROOT_NAV_GRAPH_TAG = "RootNavGraph"
 
@@ -38,11 +39,13 @@ fun RootNavGraph(
     ) {
         composable(Graph.AuthGraph.route) {
             Log.d(ROOT_NAV_GRAPH_TAG, "Rendering AuthGraph from feature:authorization")
+
             AuthorizationScreen(
                 signIn = {
                     authViewModel.signIn()
                 }
             )
+
         }
 
         composable(Graph.MainGraph.route) {

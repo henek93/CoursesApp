@@ -1,13 +1,11 @@
-package com.example.coursesapp.navigation
+package com.example.coursesapp.navigation.navGraphes
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
-import com.example.coursesapp.navigation.navGraphes.AccountNavGraph
-import com.example.coursesapp.navigation.navGraphes.FavouriteNavGraph
-import com.example.coursesapp.navigation.navGraphes.HomeNavGraph
+import com.example.coursesapp.navigation.Graph
 
 @Composable
-fun AppNavGraph(
+fun MainContentNavGraph(
     currentTab: String,
     homeNavController: NavHostController,
     favouriteNavController: NavHostController,

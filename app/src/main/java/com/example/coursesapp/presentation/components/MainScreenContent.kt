@@ -1,4 +1,4 @@
-package com.example.coursesapp.components
+package com.example.coursesapp.presentation.components
 
 import android.util.Log
 import androidx.activity.compose.BackHandler
@@ -9,11 +9,10 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.account.presentation.AccountScreen
-import com.example.coursesapp.CourseDetailScreen
-import com.example.coursesapp.navigation.AppNavGraph
+import com.example.coursesapp.presentation.CourseDetailScreen
+import com.example.coursesapp.navigation.navGraphes.MainContentNavGraph
 import com.example.coursesapp.navigation.Graph
 import com.example.coursesapp.navigation.Screen
 import com.example.coursesapp.navigation.rememberMultiStackNavigationState
@@ -26,7 +25,9 @@ import com.example.home.presentation.HomeScreen
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MainScreen() {
+fun MainScreenContentAndNavGraph(
+    signOut: () -> Unit
+) {
     val TAG = "MainScreen"
     Log.d(TAG, "MainScreen composed")
 
@@ -69,7 +70,7 @@ fun MainScreen() {
                 .fillMaxSize()
                 .padding(paddingValues)
         ) {
-            AppNavGraph(
+            MainContentNavGraph(
                 currentTab = currentTab,
                 homeNavController = homeNavController,
                 favouriteNavController = favouriteNavController,
@@ -83,7 +84,9 @@ fun MainScreen() {
                     FavouriteScreen()
                 },
                 accountScreenContent = {
-                    AccountScreen()
+                    AccountScreen(
+                        signOut = signOut
+                    )
                 },
                 courseDetailScreen = {
                     CourseDetailScreen("231e") {

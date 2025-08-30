@@ -1,4 +1,4 @@
-package com.example.coursesapp
+package com.example.coursesapp.presentation
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -15,7 +15,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.coursesapp.components.MainScreen
+import com.example.coursesapp.presentation.components.AppContent
 import com.example.coursesapp.ui.theme.CoursesAppTheme
 
 private const val TAG = "MainActivity"
@@ -26,11 +26,12 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             CoursesAppTheme {
-                MainScreen()
+                AppContent()
             }
         }
     }
 }
+
 
 @Composable
 fun CourseDetailScreen(courseId: String, onBackClick: () -> Unit) {

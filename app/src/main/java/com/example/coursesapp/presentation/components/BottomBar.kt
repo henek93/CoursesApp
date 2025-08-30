@@ -1,4 +1,4 @@
-package com.example.coursesapp.components
+package com.example.coursesapp.presentation.components
 
 import android.util.Log
 import androidx.compose.foundation.layout.fillMaxWidth

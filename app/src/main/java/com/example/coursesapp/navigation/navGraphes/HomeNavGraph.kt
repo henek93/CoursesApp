@@ -26,7 +26,6 @@ fun HomeNavGraph(
         ) {
             homeScreenContent()
         }
-
         composable(
             route = Screen.CourseDetailScreen.route
         ) {

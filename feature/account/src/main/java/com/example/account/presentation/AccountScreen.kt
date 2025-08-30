@@ -10,7 +10,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun FavouriteScreen() {
+fun AccountScreen(
+    signOut: () -> Unit
+) {
     Box(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
@@ -19,16 +21,21 @@ fun FavouriteScreen() {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
-                text = "Избранное",
+                text = "Аккаунт",
                 fontSize = 24.sp,
                 fontWeight = FontWeight.Bold
             )
             Spacer(modifier = Modifier.height(8.dp))
             Text(
-                text = "Здесь будут избранные курсы",
+                text = "Экран заглушка",
                 fontSize = 16.sp,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
+            Spacer(modifier = Modifier.height(8.dp))
+
+            Button(onClick = signOut) {
+                Text("Sign out")
+            }
         }
     }
 }

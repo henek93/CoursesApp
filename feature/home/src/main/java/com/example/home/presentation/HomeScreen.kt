@@ -10,9 +10,15 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun HomeScreen() {
+fun HomeScreen(
+    paddingValues: PaddingValues,
+    navigateDetailCoures: () -> Unit
+) {
     Box(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier
+            .fillMaxSize()
+            .systemBarsPadding()
+            .padding(paddingValues),
         contentAlignment = Alignment.Center
     ) {
         Column(
@@ -29,6 +35,16 @@ fun HomeScreen() {
                 fontSize = 16.sp,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
+            Spacer(modifier = Modifier.height(8.dp))
+            Button(
+                onClick = {
+                    navigateDetailCoures()
+                }
+            ) {
+                Text(
+                    "Navigate details"
+                )
+            }
         }
     }
 }

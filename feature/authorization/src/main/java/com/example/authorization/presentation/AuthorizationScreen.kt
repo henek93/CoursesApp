@@ -1,10 +1,14 @@
+import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.systemBarsPadding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
@@ -15,6 +19,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -23,6 +28,7 @@ import com.example.authorization.presentation.components.AuthForm
 import com.example.authorization.presentation.components.ButtonsSocialNetwork
 import com.example.authorization.presentation.components.HintText
 import com.example.ui.components.AppButton
+import com.example.utils.openUrl
 
 @Composable
 fun AuthorizationScreen(
@@ -34,6 +40,8 @@ fun AuthorizationScreen(
     val emailError = viewModel.emailError.collectAsState()
     val passwordError = viewModel.passwordError.collectAsState()
     val isLoading = viewModel.isLoading.collectAsState()
+    val context = LocalContext.current
+    val scrollState = rememberScrollState()
 
     Scaffold(
         modifier = Modifier
@@ -44,7 +52,8 @@ fun AuthorizationScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(paddingValues)
-                .padding(16.dp),
+                .padding(16.dp)
+                .verticalScroll(scrollState),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
@@ -70,7 +79,7 @@ fun AuthorizationScreen(
 
             AppButton(
                 onClick = { viewModel.signIn() },
-                enabled = viewModel.validateForm(),
+                enabled = viewModel.getEnabledValidate(),
                 color = MaterialTheme.colorScheme.primary
             ) {
                 if (isLoading.value) {
@@ -95,7 +104,13 @@ fun AuthorizationScreen(
             )
 
             ButtonsSocialNetwork(
-                modifier = Modifier.padding(vertical = 16.dp)
+                modifier = Modifier.padding(vertical = 16.dp),
+                onVkClick = {
+                    context.openUrl("https://vk.com/")
+                },
+                onOkClick = {
+                    context.openUrl("https://ok.ru/")
+                }
             )
         }
     }

@@ -99,7 +99,12 @@ class AuthorizationViewModel @Inject constructor(
         _passwordError.value = if (_password.value.isBlank()) "Введите пароль" else null
     }
 
-    fun validateForm(): Boolean {
+    fun getEnabledValidate(): Boolean{
+        return _emailError.value == null && _passwordError.value == null && !_email.value.isEmpty() && !_password.value.isEmpty()
+
+    }
+
+    private fun validateForm(): Boolean {
         validateEmail()
         validatePassword()
         return _emailError.value == null && _passwordError.value == null && !_email.value.isEmpty() && !_password.value.isEmpty()

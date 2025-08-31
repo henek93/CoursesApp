@@ -22,7 +22,9 @@ import com.example.ui.components.AppIcons
 
 @Composable
 fun ButtonsSocialNetwork(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onVkClick: () -> Unit,
+    onOkClick: () -> Unit,
 ) {
     Row(
         modifier = modifier,
@@ -33,7 +35,7 @@ fun ButtonsSocialNetwork(
             modifier = Modifier
                 .weight(1f)
                 .height(48.dp),
-            onClick = {},
+            onClick = onVkClick,
             colors = ButtonDefaults.buttonColors(containerColor = Color(0xff2683ED))
         ) {
             AppIcon(
@@ -46,7 +48,7 @@ fun ButtonsSocialNetwork(
             modifier = Modifier
                 .weight(1f)
                 .height(48.dp),
-            onClick = {},
+            onClick = onOkClick,
             colors = ButtonDefaults.buttonColors(containerColor = Color.Transparent),
             contentPadding = PaddingValues(0.dp)
         ) {

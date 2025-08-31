@@ -22,17 +22,9 @@ fun RootNavGraph(
 ) {
     Log.d(ROOT_NAV_GRAPH_TAG, "Creating RootNavGraph - authState: ${authState::class.simpleName}")
 
-    val startDestination = when (authState) {
-        is AuthState.Authenticated -> Graph.MainGraph.route
-        is AuthState.Unauthenticated -> Graph.AuthGraph.route
-        AuthState.Loading -> Graph.AuthGraph.route
-    }
-
-    Log.d(ROOT_NAV_GRAPH_TAG, "Start destination: $startDestination")
-
     NavHost(
         navController = navController,
-        startDestination = startDestination
+        startDestination = Graph.MainGraph.route
     ) {
         composable(Graph.AuthGraph.route) {
             Log.d(ROOT_NAV_GRAPH_TAG, "Rendering AuthGraph from feature:authorization")

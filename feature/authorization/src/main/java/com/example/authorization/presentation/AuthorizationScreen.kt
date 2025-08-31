@@ -70,7 +70,7 @@ fun AuthorizationScreen(
 
             AppButton(
                 onClick = { viewModel.signIn() },
-                enabled = emailError.value == null && passwordError.value == null && !isLoading.value,
+                enabled = viewModel.validateForm(),
                 color = MaterialTheme.colorScheme.primary
             ) {
                 if (isLoading.value) {

@@ -12,18 +12,19 @@ import androidx.compose.ui.graphics.Color
 @Composable
 fun AppButton(
     modifier: Modifier = Modifier,
-    text: String,
     onClick: () -> Unit,
     color: Color,
-    textColor: Color
+    enabled: Boolean,
+    content: @Composable () -> Unit
 ) {
     Button(
         modifier = modifier.fillMaxWidth(),
         colors = ButtonDefaults.buttonColors(
             containerColor = color,
         ),
+        enabled = enabled,
         onClick = onClick
     ) {
-        Text(text, style = MaterialTheme.typography.bodyLarge, color = textColor)
+        content()
     }
 }

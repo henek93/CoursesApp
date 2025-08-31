@@ -13,39 +13,40 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun AuthForm(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    emailValue: String,
+    passwordValue: String,
+    onEmailChange: (String) -> Unit,
+    onPasswordChange: (String) -> Unit,
+    emailError: String?,
+    passwordError: String?,
+    onEmailFocusChange: (Boolean) -> Unit,
+    onPasswordFocusChange: (Boolean) -> Unit,
 ) {
     Column(
         modifier = modifier.fillMaxWidth(),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.Start
     ) {
-
-        Text(
-            "Email",
-            style = MaterialTheme.typography.titleLarge,
-            color = MaterialTheme.colorScheme.onBackground
-        )
-
-
         AuthTextField(
-            modifier = Modifier.padding(vertical = 16.dp),
+            modifier = Modifier.padding(vertical = 8.dp),
+            value = emailValue,
+            onValueChange = onEmailChange,
+            label = "Email",
             placeholder = "example@gmail.com",
-            onValueChange = {},
-            isError = false
-        )
-
-        Text(
-            "Пароль",
-            style = MaterialTheme.typography.titleLarge,
-            color = MaterialTheme.colorScheme.onBackground
+            errorText = emailError,
+            onFocusChanged = onEmailFocusChange
         )
 
         AuthTextField(
-            modifier = Modifier.padding(vertical = 16.dp),
+            modifier = Modifier.padding(vertical = 8.dp),
+            value = passwordValue,
+            onValueChange = onPasswordChange,
+            label = "Пароль",
             placeholder = "Введите пароль",
-            onValueChange = {},
-            isError = false
+            isPassword = true,
+            errorText = passwordError,
+            onFocusChanged = onPasswordFocusChange
         )
     }
 }

@@ -10,6 +10,7 @@ sealed class Screen(val route: String) {
     object FavouriteScreen : Screen("favourite_screen")
     object AccountScreen : Screen("account_screen")
 
+
     object CourseDetailScreen : Screen("course_detail_screen")
 
     companion object {

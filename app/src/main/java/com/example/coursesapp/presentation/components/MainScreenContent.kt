@@ -25,9 +25,7 @@ import com.example.home.presentation.HomeScreen
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MainScreenContentAndNavGraph(
-    signOut: () -> Unit
-) {
+fun MainScreenContentAndNavGraph() {
     val TAG = "MainScreen"
     Log.d(TAG, "MainScreen composed")
 
@@ -84,9 +82,7 @@ fun MainScreenContentAndNavGraph(
                     FavouriteScreen()
                 },
                 accountScreenContent = {
-                    AccountScreen(
-                        signOut = signOut
-                    )
+                    AccountScreen()
                 },
                 courseDetailScreen = {
                     CourseDetailScreen("231e") {

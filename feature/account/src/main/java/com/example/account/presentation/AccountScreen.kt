@@ -10,9 +10,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun AccountScreen(
-    signOut: () -> Unit
-) {
+fun AccountScreen() {
     Box(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
@@ -33,7 +31,7 @@ fun AccountScreen(
             )
             Spacer(modifier = Modifier.height(8.dp))
 
-            Button(onClick = signOut) {
+            Button(onClick = {}) {
                 Text("Sign out")
             }
         }

@@ -2,6 +2,7 @@ package com.example.home.presentation.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -17,6 +18,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowForward
+import androidx.compose.material.icons.filled.Bookmark
 import androidx.compose.material.icons.filled.BookmarkBorder
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.Card
@@ -31,14 +33,18 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.domain.entity.Course
 import com.example.ui.R
-import com.example.ui.components.AppIcon
-import com.example.ui.components.AppIcons
+import com.example.utils.formatToRussian
 
 @Composable
-fun CourseCard() {
+fun CourseCard(
+    onCardClick: () -> Unit,
+    course: Course
+) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -49,10 +55,14 @@ fun CourseCard() {
         Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
 
             Image(
-                painter = painterResource(R.drawable.im_java),
+                painter = painterResource(getCourseImage(course)),
                 contentDescription = null,
                 contentScale = ContentScale.Crop,
-                modifier = Modifier.fillMaxSize()
+                modifier = Modifier
+                    .fillMaxSize()
+                    .clickable(onClick = {
+                        onCardClick()
+                    })
             )
 
             Box(
@@ -65,9 +75,9 @@ fun CourseCard() {
                     )
             ) {
                 Icon(
-                    Icons.Default.BookmarkBorder,
+                    if (course.hasLike) Icons.Filled.Bookmark else Icons.Default.BookmarkBorder,
                     contentDescription = null,
-                    tint = Color.White,
+                    tint = if (course.hasLike) MaterialTheme.colorScheme.primary else Color.White,
                     modifier = Modifier
                         .size(36.dp)
                         .padding(6.dp)
@@ -78,11 +88,18 @@ fun CourseCard() {
             Column(
                 modifier = Modifier
                     .align(Alignment.BottomCenter)
+                    .clickable(onClick = {
+                        onCardClick()
+                    })
             ) {
 
-                RatingAndData()
+                RatingAndData(
+                    course = course
+                )
 
-                CourseDescription()
+                CourseDescription(
+                    course = course
+                )
             }
         }
 
@@ -91,7 +108,8 @@ fun CourseCard() {
 
 @Composable
 fun RatingAndData(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    course: Course
 ) {
     Row(
         modifier = modifier
@@ -100,15 +118,30 @@ fun RatingAndData(
         horizontalArrangement = Arrangement.spacedBy(8.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Rating()
-        Text(text = "22 Мар 2024", fontSize = 16.sp, color = Color.White)
+        Rating(
+            rating = course.rate
+        )
+        Text(text = course.publishDate.formatToRussian(), fontSize = 16.sp, color = Color.White)
     }
 }
 
 
+fun getCourseImage(course: Course): Int {
+    return if (course.title.contains("Java")) {
+        R.drawable.im_java
+    } else if (course.title.contains("3D")) {
+        R.drawable.im_3d
+    } else if (course.title.contains("Python")) {
+        R.drawable.im_python
+    } else {
+        R.drawable.im_not
+    }
+}
+
 @Composable
 fun CourseDescription(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    course: Course
 ) {
     Column(
         modifier = modifier
@@ -117,15 +150,17 @@ fun CourseDescription(
     ) {
 
         Text(
-            text = "Java-разработчик с нуля",
+            text = course.title,
             fontSize = 20.sp,
             fontWeight = FontWeight.Bold,
-            color = Color.White
+            color = MaterialTheme.colorScheme.onSurface
         )
         Text(
-            text = "Освойте backend-разработку и программирование на Java, фреймворки...",
+            text = course.text,
             fontSize = 16.sp,
-            color = Color.White
+            color = MaterialTheme.colorScheme.onSurface,
+            maxLines = 2,
+            overflow = TextOverflow.Ellipsis
         )
 
         Row(
@@ -136,8 +171,8 @@ fun CourseDescription(
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
-                text = "999 ₽",
-                color = Color.White,
+                text = "${course.price} ₽",
+                color = MaterialTheme.colorScheme.onSurface,
                 style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.Bold)
             )
 

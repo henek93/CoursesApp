@@ -18,6 +18,7 @@ object AppIcons {
     const val Filter = "\uE904"
     const val ArrowBack = "\uE905"
     const val OK = "\uE906"
+    const val DoubleArrow = "\uE907"
 }
 
 @Composable

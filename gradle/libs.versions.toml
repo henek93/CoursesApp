@@ -23,6 +23,9 @@ datastore = "1.1.7"
 ksp = "2.0.20-1.0.24"
 
 
+# Material Icons
+materialIcons = "1.7.8"
+
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -72,6 +75,10 @@ androidx-datastore-core = { group = "androidx.datastore", name = "datastore-core
 
 # Lifecycle
 lifecycle-viewmodel-compose = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-compose", version.ref = "lifecycle" }
+# icons
+icons = { group = "androidx.compose.material", name = "material-icons-extended", version.ref = "materialIcons" }
+
+
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

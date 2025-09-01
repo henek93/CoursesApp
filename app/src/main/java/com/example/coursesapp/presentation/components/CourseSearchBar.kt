@@ -49,7 +49,7 @@ fun CourseAppBar(
                 Text(
                     text = "Search courses...",
                     color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.6f),
-                    style = MaterialTheme.typography.bodyMedium
+                    style = MaterialTheme.typography.bodyLarge
                 )
             },
             singleLine = true,

@@ -20,6 +20,8 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 import com.example.coursesapp.navigation.Graph
 import com.example.coursesapp.navigation.MultiStackNavigationState
+import com.example.ui.components.AppIcon
+import com.example.ui.components.AppIcons
 
 /** Bottom navigation bar для архитектуры с множественными стеками */
 @Composable
@@ -35,9 +37,9 @@ fun MultiStackBottomNavigationBar(
 
     val items =
         listOf(
-            BottomNavItem(Graph.HomeGraph.route, "Главная", Icons.Default.Home),
-            BottomNavItem(Graph.FavouriteGraph.route, "Избранное", Icons.Default.Favorite),
-            BottomNavItem(Graph.AccountGraph.route, "Аккаунт", Icons.Default.AccountCircle)
+            BottomNavItem(Graph.HomeGraph.route, "Главная", AppIcons.House),
+            BottomNavItem(Graph.FavouriteGraph.route, "Избранное", AppIcons.BookMark),
+            BottomNavItem(Graph.AccountGraph.route, "Аккаунт", AppIcons.Person)
         )
 
     NavigationBar(
@@ -54,10 +56,9 @@ fun MultiStackBottomNavigationBar(
         items.forEach { item ->
             NavigationBarItem(
                 icon = {
-                    Icon(
+                    AppIcon(
                         item.icon,
-                        contentDescription = item.label,
-                        tint =
+                        color =
                             if (currentTab == item.route)
                                 MaterialTheme.colorScheme.primary
                             else MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
@@ -89,5 +90,5 @@ fun MultiStackBottomNavigationBar(
 data class BottomNavItem(
     val route: String,
     val label: String,
-    val icon: ImageVector
+    val icon: String
 )

@@ -2,6 +2,8 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.hilt)
+    alias(libs.plugins.ksp)
 }
 
 android {
@@ -46,8 +48,16 @@ dependencies {
     implementation(project(":feature:account"))
     implementation(project(":feature:favourite"))
     implementation(project(":feature:authorization"))
-    implementation(project(":core:auth"))
     implementation(project(":core:ui"))
+    implementation(project(":core:data"))
+
+    // Hilt
+    implementation(libs.hilt.android)
+    implementation(libs.hilt.navigation.compose)
+    ksp(libs.hilt.compiler)
+
+    // ViewModel
+    implementation(libs.lifecycle.viewmodel.compose)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)

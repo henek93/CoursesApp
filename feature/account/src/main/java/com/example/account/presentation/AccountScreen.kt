@@ -8,22 +8,20 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 
 @Composable
 fun AccountScreen(
-    signOut: () -> Unit
+    viewModel: AccountViewModel = hiltViewModel<AccountViewModel>()
 ) {
     Box(
-        modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center
+        modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center
     ) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
-                text = "Аккаунт",
-                fontSize = 24.sp,
-                fontWeight = FontWeight.Bold
+                text = "Аккаунт", fontSize = 24.sp, fontWeight = FontWeight.Bold
             )
             Spacer(modifier = Modifier.height(8.dp))
             Text(
@@ -33,7 +31,9 @@ fun AccountScreen(
             )
             Spacer(modifier = Modifier.height(8.dp))
 
-            Button(onClick = signOut) {
+            Button(onClick = {
+                viewModel.signOut()
+            }) {
                 Text("Sign out")
             }
         }

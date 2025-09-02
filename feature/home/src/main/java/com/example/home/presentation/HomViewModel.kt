@@ -17,43 +17,18 @@ class HomViewModel @Inject constructor(
     private val repository: HomeRepository
 ) : ViewModel() {
 
-    private val TAG = "HomViewModel"
-
     private val _screenState = MutableStateFlow<HomeScreenState>(HomeScreenState.Initial)
     val screenState = _screenState.asStateFlow()
 
     private val _loadingIds = MutableStateFlow<Set<String>>(emptySet())
     val loadingIds = _loadingIds.asStateFlow()
 
+    private var originalCourses: List<Course> = emptyList()
+    private var isSortByData = false
 
     init {
-        Log.d(TAG, "init: ViewModel created")
         collectCourses()
         getCourses()
-    }
-
-    private fun collectCourses() {
-        viewModelScope.launch {
-            Log.d(TAG, "collectCourses: start collecting from repository.listCourses")
-            repository.listCourses.collect { list ->
-                Log.d(TAG, "collectCourses: received ${list.size} courses")
-                _screenState.value = HomeScreenState.Succsed(list = list)
-            }
-        }
-    }
-
-    private fun getCourses() {
-        viewModelScope.launch {
-            Log.d(TAG, "getCourses: start")
-            _screenState.value = HomeScreenState.Loading
-            try {
-                repository.getCourses()
-                Log.d(TAG, "getCourses: repository.getCourses() finished successfully")
-            } catch (e: Exception) {
-                Log.e(TAG, "getCourses: failed with exception", e)
-                _screenState.value = HomeScreenState.Error(e.message ?: "Unknown error")
-            }
-        }
     }
 
     fun changeHasLike(course: Course) {
@@ -67,4 +42,38 @@ class HomViewModel @Inject constructor(
         }
     }
 
+    fun sortByPublishDate() {
+        isSortByData = !isSortByData
+        applyFilters()
+    }
+
+    private fun collectCourses() {
+        viewModelScope.launch {
+            repository.listCourses.collect { list ->
+                originalCourses = list
+                applyFilters()
+            }
+        }
+    }
+
+    private fun getCourses() {
+        viewModelScope.launch {
+            _screenState.value = HomeScreenState.Loading
+            try {
+                repository.getCourses()
+            } catch (e: Exception) {
+                _screenState.value = HomeScreenState.Error(e.message ?: "Unknown error")
+            }
+        }
+    }
+
+    private fun applyFilters() {
+        val sorted = if (isSortByData) {
+            originalCourses.sortedByDescending { it.publishDate }
+        } else {
+            originalCourses
+        }
+
+        _screenState.value = HomeScreenState.Succsed(list = sorted)
+    }
 }

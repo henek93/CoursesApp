@@ -1,5 +1,6 @@
 package com.example.home.presentation
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
@@ -47,7 +48,10 @@ fun HomeScreen(
             HomeContent(
                 list = (screenState.value as HomeScreenState.Succsed).list,
                 onFavouriteClick = { viewModel.changeHasLike(it) },
-                loadingIds = loadingIds
+                loadingIds = loadingIds,
+                onSortClick = {
+                    viewModel.sortByPublishDate()
+                }
             )
 
         }
@@ -64,7 +68,8 @@ fun HomeScreen(
 fun HomeContent(
     list: List<Course>,
     onFavouriteClick: (Course) -> Unit,
-    loadingIds: Set<String>
+    loadingIds: Set<String>,
+    onSortClick: () -> Unit
 ) {
     LazyColumn(
         modifier = Modifier
@@ -73,7 +78,11 @@ fun HomeContent(
     ) {
         item {
             Row(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clickable(onClick = {
+                        onSortClick()
+                    }),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.End
             ) {

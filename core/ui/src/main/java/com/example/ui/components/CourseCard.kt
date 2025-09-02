@@ -256,9 +256,6 @@ fun getGradientGlassBlur() = Brush.radialGradient(
         Color(0xFFF0F0F0).copy(alpha = 0.4f),
         Color(0xFFE8E8E8).copy(alpha = 0.35f),
         Color(0xFFE8E8E8).copy(alpha = 0.25f),
-//        Color(0x6032333A),
-//        Color(0x4D32333A),
-//        Color(0x3532333A)
     ),
     radius = 80f,
     center = Offset(0.3f, 0.3f)

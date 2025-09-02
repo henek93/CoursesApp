@@ -2,6 +2,8 @@ package com.example.data.di
 
 import android.content.Context
 import com.example.data.datastore.AuthDataStore
+import com.example.data.local.db.CourseDao
+import com.example.data.local.db.CourseDatabase
 import com.example.data.network.ApiFactory
 import com.example.data.network.ApiService
 import dagger.Module
@@ -26,5 +28,11 @@ object DataSourceModule {
     @Singleton
     @Provides
     fun provideApiService(): ApiService = ApiFactory.api
+
+    @Singleton
+    @Provides
+    fun provideCourseDao(
+        @ApplicationContext context: Context
+    ): CourseDao = CourseDatabase.getInstance(context).dao()
 
 }

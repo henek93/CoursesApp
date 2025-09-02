@@ -1,5 +1,6 @@
 package com.example.home.di
 
+import com.example.data.local.db.CourseDao
 import com.example.data.network.ApiService
 import com.example.home.data.HomeRepositoryImpl
 import com.example.home.domain.HomeRepository
@@ -16,7 +17,8 @@ object HomeDiModule {
     @Singleton
     @Provides
     fun provideHomeRepository(
-        apiService: ApiService
-    ): HomeRepository = HomeRepositoryImpl(apiService)
+        apiService: ApiService,
+        courseDao: CourseDao
+    ): HomeRepository = HomeRepositoryImpl(apiService, courseDao)
 
 }

@@ -21,7 +21,7 @@ fun CourseDto.toEntity() = Course(
     text = text,
     price = price,
     rate = rate,
-    startDate = startDate.toDate(),
+    startDate = startDate,
     hasLike = hasLike,
-    publishDate = publishDate.toDate()
+    publishDate = publishDate
 )

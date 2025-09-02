@@ -1,4 +1,4 @@
-package com.example.home.presentation.components
+package com.example.ui.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -22,6 +22,7 @@ import androidx.compose.material.icons.filled.Bookmark
 import androidx.compose.material.icons.filled.BookmarkBorder
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.Card
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -29,6 +30,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
@@ -43,13 +46,15 @@ import com.example.utils.formatToRussian
 @Composable
 fun CourseCard(
     onCardClick: () -> Unit,
-    course: Course
+    onFavouriteClick: () -> Unit,
+    course: Course,
+    loadingIds: Set<String>
 ) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .height(350.dp)
-            .padding(vertical = 8.dp),
+            .padding(vertical = 10.dp),
         shape = RoundedCornerShape(16.dp),
     ) {
         Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
@@ -70,18 +75,28 @@ fun CourseCard(
                     .align(Alignment.TopEnd)
                     .padding(12.dp)
                     .clip(CircleShape)
-                    .background(
-                        Color.Black.copy(alpha = 0.3f)
-                    )
+                    .background(Color.Black.copy(alpha = 0.3f)),
+                contentAlignment = Alignment.Center
             ) {
-                Icon(
-                    if (course.hasLike) Icons.Filled.Bookmark else Icons.Default.BookmarkBorder,
-                    contentDescription = null,
-                    tint = if (course.hasLike) MaterialTheme.colorScheme.primary else Color.White,
-                    modifier = Modifier
-                        .size(36.dp)
-                        .padding(6.dp)
-                )
+                if (loadingIds.contains(course.id)) {
+                    CircularProgressIndicator(
+                        color = MaterialTheme.colorScheme.primary,
+                        strokeWidth = 2.dp,
+                        modifier = Modifier
+                            .size(34.dp)
+                            .padding(6.dp)
+                    )
+                } else {
+                    Icon(
+                        if (course.hasLike) Icons.Filled.Bookmark else Icons.Default.BookmarkBorder,
+                        contentDescription = null,
+                        tint = if (course.hasLike) MaterialTheme.colorScheme.primary else Color.White,
+                        modifier = Modifier
+                            .size(36.dp)
+                            .padding(6.dp)
+                            .clickable(onClick = { onFavouriteClick() })
+                    )
+                }
             }
 
 
@@ -121,7 +136,21 @@ fun RatingAndData(
         Rating(
             rating = course.rate
         )
-        Text(text = course.publishDate.formatToRussian(), fontSize = 16.sp, color = Color.White)
+        Box(
+            modifier = Modifier.background(
+                brush = getGradientGlassBlur(),
+                shape = RoundedCornerShape(30.dp)
+            )
+        ) {
+            Text(
+                text = course.publishDate,
+                fontSize = 16.sp,
+                color = Color.White,
+                modifier = Modifier.padding(10.dp)
+            )
+        }
+
+
     }
 }
 
@@ -201,7 +230,12 @@ fun CourseDescription(
 fun Rating(rating: Float = 4.9f) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
+        modifier = Modifier
+            .background(
+                brush = getGradientGlassBlur(),
+                shape = RoundedCornerShape(30.dp)
+            )
+            .padding(8.dp)
     ) {
         Icon(
             imageVector = Icons.Default.Star,
@@ -213,3 +247,16 @@ fun Rating(rating: Float = 4.9f) {
         Text(text = "$rating", fontSize = 15.sp, color = Color.White)
     }
 }
+
+
+fun getGradientGlassBlur() = Brush.radialGradient(
+    colors = listOf(
+        Color(0x7032333A),
+        Color(0xFFF8F8FF).copy(alpha = 0.55f),
+        Color(0xFFF0F0F0).copy(alpha = 0.4f),
+        Color(0xFFE8E8E8).copy(alpha = 0.35f),
+        Color(0xFFE8E8E8).copy(alpha = 0.25f),
+    ),
+    radius = 80f,
+    center = Offset(0.3f, 0.3f)
+)

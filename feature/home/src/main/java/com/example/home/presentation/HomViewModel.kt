@@ -24,11 +24,10 @@ class HomViewModel @Inject constructor(
 
     private var originalCourses: List<Course> = emptyList()
     private var isSortByData = false
+    private var isDataLoaded = false
 
     init {
-        collectCourses()
-        collectLocalCourses()
-        getCourses()
+        loadData()
     }
 
     fun changeHasLike(course: Course) {
@@ -47,11 +46,31 @@ class HomViewModel @Inject constructor(
         applyFilters()
     }
 
+    private fun loadData() {
+        if (isDataLoaded) return
+
+        viewModelScope.launch {
+            _screenState.value = HomeScreenState.Loading
+            try {
+                repository.getCourses()
+
+                collectCourses()
+                collectLocalCourses()
+
+                isDataLoaded = true
+            } catch (e: Exception) {
+                _screenState.value = HomeScreenState.Error(e.message ?: "Unknown error")
+            }
+        }
+    }
+
     private fun collectCourses() {
         viewModelScope.launch {
             repository.listCourses.collect { list ->
-                originalCourses = list
-                applyFilters()
+                if (list.isNotEmpty()) {
+                    originalCourses = list
+                    applyFilters()
+                }
             }
         }
     }
@@ -59,17 +78,6 @@ class HomViewModel @Inject constructor(
     private fun collectLocalCourses() {
         viewModelScope.launch {
             repository.collectLocalCourses()
-        }
-    }
-
-    private fun getCourses() {
-        viewModelScope.launch {
-            _screenState.value = HomeScreenState.Loading
-            try {
-                repository.getCourses()
-            } catch (e: Exception) {
-                _screenState.value = HomeScreenState.Error(e.message ?: "Unknown error")
-            }
         }
     }
 

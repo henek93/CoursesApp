@@ -21,7 +21,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.domain.entity.Course
-import com.example.home.presentation.components.CourseCard
+import com.example.ui.components.CourseCard
 import com.example.home.presentation.components.HomeErrorScreen
 import com.example.ui.components.AppIcon
 import com.example.ui.components.AppIcons

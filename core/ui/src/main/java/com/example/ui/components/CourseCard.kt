@@ -1,4 +1,4 @@
-package com.example.home.presentation.components
+package com.example.ui.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -49,7 +49,7 @@ fun CourseCard(
         modifier = Modifier
             .fillMaxWidth()
             .height(350.dp)
-            .padding(vertical = 8.dp),
+            .padding(vertical = 10.dp),
         shape = RoundedCornerShape(16.dp),
     ) {
         Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {

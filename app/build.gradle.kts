@@ -50,6 +50,7 @@ dependencies {
     implementation(project(":feature:authorization"))
     implementation(project(":core:ui"))
     implementation(project(":core:data"))
+    implementation(project(":core:localization"))
 
     // Hilt
     implementation(libs.hilt.android)

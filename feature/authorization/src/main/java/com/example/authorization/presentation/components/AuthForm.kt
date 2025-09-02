@@ -9,7 +9,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.example.localization.R
 
 @Composable
 fun AuthForm(
@@ -42,8 +44,8 @@ fun AuthForm(
             modifier = Modifier.padding(vertical = 8.dp),
             value = passwordValue,
             onValueChange = onPasswordChange,
-            label = "Пароль",
-            placeholder = "Введите пароль",
+            label = stringResource(R.string.auth_password),
+            placeholder = stringResource(R.string.auth_enter_password),
             isPassword = true,
             errorText = passwordError,
             onFocusChanged = onPasswordFocusChange

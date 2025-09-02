@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Navigation -->
+    <string name="nav_home">Главная</string>
+    <string name="nav_favourite">Избранное</string>
+    <string name="nav_account">Аккаунт</string>
+    
+    <!-- Authorization -->
+    <string name="auth_login">Вход</string>
+    <string name="auth_password">Пароль</string>
+    <string name="auth_enter_password">Введите пароль</string>
+    <string name="auth_no_account">Нету аккаунта?</string>
+    <string name="auth_forgot_password">Забыли пароль</string>
+    <string name="auth_fill_email">Заполните Email</string>
+    <string name="auth_invalid_email">Некорректный email</string>
+    <string name="auth_enter_password_validation">Введите пароль</string>
+    
+    <!-- Home -->
+    <string name="home_sort_by_date">По дате добавления</string>
+    <string name="home_more_details">Подробнее</string>
+    
+    <!-- Favourite -->
+    <string name="favourite_title">Избранное</string>
+    <string name="favourite_empty_message">Вы еще не добавили курсов в избранное</string>
+    
+    <!-- Account -->
+    <string name="account_title">Аккаунт</string>
+    <string name="account_placeholder">Экран заглушка</string>
+    <string name="account_sign_out">Выйти</string>
+    
+    <!-- Course Details -->
+    <string name="course_details">Детали курса: %1$s</string>
+    <string name="course_back">Назад</string>
+    
+    <!-- Common -->
+    <string name="unknown_error">Неизвестная ошибка</string>
+</resources>

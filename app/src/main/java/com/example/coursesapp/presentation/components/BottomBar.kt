@@ -17,9 +17,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.coursesapp.navigation.Graph
 import com.example.coursesapp.navigation.MultiStackNavigationState
+import com.example.localization.R
 import com.example.ui.components.AppIcon
 import com.example.ui.components.AppIcons
 
@@ -37,9 +39,9 @@ fun MultiStackBottomNavigationBar(
 
     val items =
         listOf(
-            BottomNavItem(Graph.HomeGraph.route, "Главная", AppIcons.House),
-            BottomNavItem(Graph.FavouriteGraph.route, "Избранное", AppIcons.BookMark),
-            BottomNavItem(Graph.AccountGraph.route, "Аккаунт", AppIcons.Person)
+            BottomNavItem(Graph.HomeGraph.route, stringResource(R.string.nav_home), AppIcons.House),
+            BottomNavItem(Graph.FavouriteGraph.route, stringResource(R.string.nav_favourite), AppIcons.BookMark),
+            BottomNavItem(Graph.AccountGraph.route, stringResource(R.string.nav_account), AppIcons.Person)
         )
 
     NavigationBar(

@@ -1,11 +1,11 @@
 package com.example.coursesapp.navigation
 
-import AuthorizationScreen
 import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.example.authorization.presentation.AuthorizationScreen
 import com.example.coursesapp.auth.AuthState
 import com.example.coursesapp.presentation.components.MainScreenContentAndNavGraph
 

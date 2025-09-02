@@ -1,10 +1,13 @@
 package com.example.authorization.presentation
 
+import android.content.Context
 import android.util.Patterns
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.authorization.domain.AuthRepository
+import com.example.localization.R
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -13,7 +16,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AuthorizationViewModel @Inject constructor(
-    private val authRepository: AuthRepository
+    private val authRepository: AuthRepository,
+    @ApplicationContext private val context: Context
 ) : ViewModel() {
 
     private val _email = MutableStateFlow("")
@@ -85,8 +89,8 @@ class AuthorizationViewModel @Inject constructor(
             return
         }
         _emailError.value = when {
-            _email.value.isBlank() -> "Заполните Email"
-            !Patterns.EMAIL_ADDRESS.matcher(_email.value).matches() -> "Некорректный email"
+            _email.value.isBlank() -> context.getString(R.string.auth_fill_email)
+            !Patterns.EMAIL_ADDRESS.matcher(_email.value).matches() -> context.getString(R.string.auth_invalid_email)
             else -> null
         }
     }
@@ -96,7 +100,7 @@ class AuthorizationViewModel @Inject constructor(
             _passwordError.value = null
             return
         }
-        _passwordError.value = if (_password.value.isBlank()) "Введите пароль" else null
+        _passwordError.value = if (_password.value.isBlank()) context.getString(R.string.auth_enter_password_validation) else null
     }
 
     fun getEnabledValidate(): Boolean{

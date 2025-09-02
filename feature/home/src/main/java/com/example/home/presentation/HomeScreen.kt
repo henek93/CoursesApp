@@ -86,7 +86,7 @@ fun HomeContent(
 
         }
         items(count = list.size) { index ->
-            CourseCard(onCardClick = {}, course = list[index])
+            CourseCard(onCardClick = {}, course = list[index], onFavouriteClick = {})
         }
     }
 }

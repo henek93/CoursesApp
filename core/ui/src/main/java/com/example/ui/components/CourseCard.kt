@@ -43,6 +43,7 @@ import com.example.utils.formatToRussian
 @Composable
 fun CourseCard(
     onCardClick: () -> Unit,
+    onFavouriteClick: () -> Unit,
     course: Course
 ) {
     Card(
@@ -81,6 +82,7 @@ fun CourseCard(
                     modifier = Modifier
                         .size(36.dp)
                         .padding(6.dp)
+                        .clickable(onClick = { onFavouriteClick() })
                 )
             }
 

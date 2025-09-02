@@ -1,7 +1,9 @@
-package com.example.data
+package com.example.data.di
 
 import android.content.Context
 import com.example.data.datastore.AuthDataStore
+import com.example.data.network.ApiFactory
+import com.example.data.network.ApiService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -20,5 +22,9 @@ object DataSourceModule {
     ): AuthDataStore {
         return AuthDataStore(context)
     }
+
+    @Singleton
+    @Provides
+    fun provideApiService(): ApiService = ApiFactory.api
 
 }

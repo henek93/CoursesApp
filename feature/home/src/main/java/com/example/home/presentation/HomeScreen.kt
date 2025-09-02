@@ -22,6 +22,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.domain.entity.Course
 import com.example.home.presentation.components.CourseCard
+import com.example.home.presentation.components.HomeErrorScreen
 import com.example.ui.components.AppIcon
 import com.example.ui.components.AppIcons
 
@@ -33,7 +34,6 @@ fun HomeScreen(
 ) {
     val screenState = viewModel.screenState.collectAsState()
     when (screenState.value) {
-        is HomeScreenState.Error -> TODO()
         HomeScreenState.Initial -> {}
         HomeScreenState.Loading -> {
             Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
@@ -44,6 +44,12 @@ fun HomeScreen(
         is HomeScreenState.Succsed -> {
             HomeContent(list = (screenState.value as HomeScreenState.Succsed).list)
 
+        }
+
+        is HomeScreenState.Error -> {
+            HomeErrorScreen(
+                errorText = (screenState.value as HomeScreenState.Error).message
+            )
         }
     }
 }

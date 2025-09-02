@@ -18,17 +18,27 @@ class HomViewModel @Inject constructor(
     val screenState = _screenState.asStateFlow()
 
     init {
+        collectCourses()
+        getCourses()
+    }
+
+    private
+    fun collectCourses() {
         viewModelScope.launch {
             repository.listCourses.collect { list ->
                 _screenState.value = HomeScreenState.Succsed(list = list)
             }
         }
-        getCourses()
     }
 
     private fun getCourses() {
         viewModelScope.launch {
-            repository.getCourses()
+            _screenState.value = HomeScreenState.Loading
+            try {
+                repository.getCourses()
+            } catch (e: Exception) {
+                _screenState.value = HomeScreenState.Error(e.message ?: "Unknown error")
+            }
 
         }
     }

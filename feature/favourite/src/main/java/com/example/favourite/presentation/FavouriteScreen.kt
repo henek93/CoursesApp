@@ -9,11 +9,13 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.domain.entity.Course
+import com.example.localization.R
 import com.example.ui.components.CourseCard
 import com.example.utils.toDate
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -36,7 +38,7 @@ fun FavouriteScreen(
         horizontalAlignment = Alignment.Start
     ) {
         Text(
-            "Избранное",
+            stringResource(R.string.favourite_title),
             style = MaterialTheme.typography.displaySmall,
             color = MaterialTheme.colorScheme.onBackground
         )
@@ -81,7 +83,7 @@ fun FavouriteContent(
     if (list.isEmpty()) {
         Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
             Text(
-                "Вы еще не добавили курсов в избранное",
+                stringResource(R.string.favourite_empty_message),
                 style = MaterialTheme.typography.bodyLarge,
                 color = MaterialTheme.colorScheme.primary
             )

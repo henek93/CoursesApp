@@ -1,6 +1,5 @@
 package com.example.coursesapp.presentation
 
-import AuthorizationScreen
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -19,10 +18,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.coursesapp.presentation.components.AppContent
 import com.example.coursesapp.presentation.components.SplashScreen
+import com.example.localization.R
 import com.example.ui.theme.CoursesAppTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -65,8 +66,8 @@ fun CourseDetailScreen(courseId: String, onBackClick: () -> Unit) {
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        Text("Детали курса: $courseId")
+        Text(stringResource(R.string.course_details, courseId))
         Spacer(modifier = Modifier.height(16.dp))
-        Button(onClick = onBackClick) { Text("Назад") }
+        Button(onClick = onBackClick) { Text(stringResource(R.string.course_back)) }
     }
 }

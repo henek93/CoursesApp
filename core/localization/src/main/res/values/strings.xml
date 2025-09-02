@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Navigation -->
+    <string name="nav_home">Home</string>
+    <string name="nav_favourite">Favourite</string>
+    <string name="nav_account">Account</string>
+    
+    <!-- Authorization -->
+    <string name="auth_login">Login</string>
+    <string name="auth_password">Password</string>
+    <string name="auth_enter_password">Enter password</string>
+    <string name="auth_no_account">Don\'t have an account?</string>
+    <string name="auth_forgot_password">Forgot password</string>
+    <string name="auth_fill_email">Fill in Email</string>
+    <string name="auth_invalid_email">Invalid email</string>
+    <string name="auth_enter_password_validation">Enter password</string>
+    
+    <!-- Home -->
+    <string name="home_sort_by_date">Sort by date</string>
+    <string name="home_more_details">More details</string>
+    
+    <!-- Favourite -->
+    <string name="favourite_title">Favourite</string>
+    <string name="favourite_empty_message">You haven\'t added any courses to favourites yet</string>
+    
+    <!-- Account -->
+    <string name="account_title">Account</string>
+    <string name="account_placeholder">Screen placeholder</string>
+    <string name="account_sign_out">Sign out</string>
+    
+    <!-- Course Details -->
+    <string name="course_details">Course details: %1$s</string>
+    <string name="course_back">Back</string>
+    
+    <!-- Common -->
+    <string name="unknown_error">Unknown error</string>
+</resources>

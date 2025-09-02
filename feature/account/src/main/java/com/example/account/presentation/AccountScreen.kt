@@ -5,10 +5,12 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.localization.R
 
 @Composable
 fun AccountScreen(
@@ -21,11 +23,11 @@ fun AccountScreen(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
-                text = "Аккаунт", fontSize = 24.sp, fontWeight = FontWeight.Bold
+                text = stringResource(R.string.account_title), fontSize = 24.sp, fontWeight = FontWeight.Bold
             )
             Spacer(modifier = Modifier.height(8.dp))
             Text(
-                text = "Экран заглушка",
+                text = stringResource(R.string.account_placeholder),
                 fontSize = 16.sp,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
@@ -34,7 +36,7 @@ fun AccountScreen(
             Button(onClick = {
                 viewModel.signOut()
             }) {
-                Text("Sign out")
+                Text(stringResource(R.string.account_sign_out))
             }
         }
     }

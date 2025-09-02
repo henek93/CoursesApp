@@ -19,11 +19,13 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.domain.entity.Course
 import com.example.home.presentation.components.HomeErrorScreen
+import com.example.localization.R
 import com.example.ui.components.AppIcon
 import com.example.ui.components.AppIcons
 import com.example.ui.components.CourseCard
@@ -87,7 +89,7 @@ fun HomeContent(
                 horizontalArrangement = Arrangement.End
             ) {
                 Text(
-                    "По дате добавления",
+                    stringResource(R.string.home_sort_by_date),
                     color = MaterialTheme.colorScheme.primary,
                     style = MaterialTheme.typography.bodyMedium
                 )

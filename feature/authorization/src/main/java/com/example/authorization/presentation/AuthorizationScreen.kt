@@ -1,3 +1,5 @@
+package com.example.authorization.presentation
+
 import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -20,6 +22,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -27,6 +30,7 @@ import com.example.authorization.presentation.AuthorizationViewModel
 import com.example.authorization.presentation.components.AuthForm
 import com.example.authorization.presentation.components.ButtonsSocialNetwork
 import com.example.authorization.presentation.components.HintText
+import com.example.localization.R
 import com.example.ui.components.AppButton
 import com.example.utils.openUrl
 
@@ -60,7 +64,7 @@ fun AuthorizationScreen(
         ) {
 
             Text(
-                "Вход",
+                stringResource(R.string.auth_login),
                 style = MaterialTheme.typography.displaySmall,
                 color = MaterialTheme.colorScheme.onBackground,
                 modifier = Modifier.fillMaxWidth(),
@@ -90,7 +94,7 @@ fun AuthorizationScreen(
                         modifier = Modifier.size(20.dp)
                     )
                 } else {
-                    Text("Вход", color = Color.White, style = MaterialTheme.typography.bodyMedium)
+                    Text(stringResource(R.string.auth_login), color = Color.White, style = MaterialTheme.typography.bodyMedium)
                 }
             }
 

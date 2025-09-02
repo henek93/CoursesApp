@@ -25,4 +25,7 @@ interface CourseDao {
 
     @Query("DELETE FROM courses WHERE id = :courseId")
     suspend fun deleteCourseFromFavourite(courseId: String)
+
+    @Query("DELETE FROM courses")
+    suspend fun clearAllCourses()
 }

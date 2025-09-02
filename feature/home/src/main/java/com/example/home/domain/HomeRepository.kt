@@ -11,4 +11,6 @@ interface HomeRepository {
     suspend fun getCourses()
 
     suspend fun changeHasLike(course: Course)
+
+    suspend fun collectLocalCourses()
 }

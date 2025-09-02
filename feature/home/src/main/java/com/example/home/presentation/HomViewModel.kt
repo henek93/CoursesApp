@@ -27,6 +27,7 @@ class HomViewModel @Inject constructor(
 
     init {
         collectCourses()
+        collectLocalCourses()
         getCourses()
     }
 
@@ -55,6 +56,12 @@ class HomViewModel @Inject constructor(
         }
     }
 
+    private fun collectLocalCourses() {
+        viewModelScope.launch {
+            repository.collectLocalCourses()
+        }
+    }
+
     private fun getCourses() {
         viewModelScope.launch {
             _screenState.value = HomeScreenState.Loading
@@ -72,7 +79,6 @@ class HomViewModel @Inject constructor(
         } else {
             originalCourses
         }
-
         _screenState.value = HomeScreenState.Succsed(list = sorted)
     }
 }

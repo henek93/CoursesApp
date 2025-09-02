@@ -79,7 +79,12 @@ fun FavouriteContent(
     } else {
         LazyColumn {
             items(count = list.size) { index ->
-                CourseCard(onCardClick = {}, course = list[index], onFavouriteClick = {})
+                CourseCard(
+                    onCardClick = {},
+                    course = list[index],
+                    onFavouriteClick = {},
+                    loadingIds = setOf()
+                )
             }
         }
     }

@@ -15,6 +15,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -33,6 +34,7 @@ fun HomeScreen(
     viewModel: HomViewModel = hiltViewModel<HomViewModel>()
 ) {
     val screenState = viewModel.screenState.collectAsState()
+    val loadingIds by viewModel.loadingIds.collectAsState()
     when (screenState.value) {
         HomeScreenState.Initial -> {}
         HomeScreenState.Loading -> {
@@ -44,7 +46,9 @@ fun HomeScreen(
         is HomeScreenState.Succsed -> {
             HomeContent(
                 list = (screenState.value as HomeScreenState.Succsed).list,
-                onFavouriteClick = { viewModel.changeHasLike(it) })
+                onFavouriteClick = { viewModel.changeHasLike(it) },
+                loadingIds = loadingIds
+            )
 
         }
 
@@ -59,7 +63,8 @@ fun HomeScreen(
 @Composable
 fun HomeContent(
     list: List<Course>,
-    onFavouriteClick: (Course) -> Unit
+    onFavouriteClick: (Course) -> Unit,
+    loadingIds: Set<String>
 ) {
     LazyColumn(
         modifier = Modifier
@@ -88,9 +93,14 @@ fun HomeContent(
 
         }
         items(count = list.size) { index ->
-            CourseCard(onCardClick = {}, course = list[index], onFavouriteClick = {
-                onFavouriteClick(list[index])
-            })
+            CourseCard(
+                onCardClick = {},
+                course = list[index],
+                onFavouriteClick = {
+                    onFavouriteClick(list[index])
+                },
+                loadingIds = loadingIds
+            )
         }
     }
 }

@@ -22,6 +22,7 @@ import androidx.compose.material.icons.filled.Bookmark
 import androidx.compose.material.icons.filled.BookmarkBorder
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.Card
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -44,7 +45,8 @@ import com.example.utils.formatToRussian
 fun CourseCard(
     onCardClick: () -> Unit,
     onFavouriteClick: () -> Unit,
-    course: Course
+    course: Course,
+    loadingIds: Set<String>
 ) {
     Card(
         modifier = Modifier
@@ -71,19 +73,28 @@ fun CourseCard(
                     .align(Alignment.TopEnd)
                     .padding(12.dp)
                     .clip(CircleShape)
-                    .background(
-                        Color.Black.copy(alpha = 0.3f)
-                    )
+                    .background(Color.Black.copy(alpha = 0.3f)),
+                contentAlignment = Alignment.Center
             ) {
-                Icon(
-                    if (course.hasLike) Icons.Filled.Bookmark else Icons.Default.BookmarkBorder,
-                    contentDescription = null,
-                    tint = if (course.hasLike) MaterialTheme.colorScheme.primary else Color.White,
-                    modifier = Modifier
-                        .size(36.dp)
-                        .padding(6.dp)
-                        .clickable(onClick = { onFavouriteClick() })
-                )
+                if (loadingIds.contains(course.id)) {
+                    CircularProgressIndicator(
+                        color = MaterialTheme.colorScheme.primary,
+                        strokeWidth = 2.dp,
+                        modifier = Modifier
+                            .size(34.dp)
+                            .padding(6.dp)
+                    )
+                } else {
+                    Icon(
+                        if (course.hasLike) Icons.Filled.Bookmark else Icons.Default.BookmarkBorder,
+                        contentDescription = null,
+                        tint = if (course.hasLike) MaterialTheme.colorScheme.primary else Color.White,
+                        modifier = Modifier
+                            .size(36.dp)
+                            .padding(6.dp)
+                            .clickable(onClick = { onFavouriteClick() })
+                    )
+                }
             }
 
 

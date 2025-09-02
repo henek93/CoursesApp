@@ -22,6 +22,10 @@ class HomViewModel @Inject constructor(
     private val _screenState = MutableStateFlow<HomeScreenState>(HomeScreenState.Initial)
     val screenState = _screenState.asStateFlow()
 
+    private val _loadingIds = MutableStateFlow<Set<String>>(emptySet())
+    val loadingIds = _loadingIds.asStateFlow()
+
+
     init {
         Log.d(TAG, "init: ViewModel created")
         collectCourses()
@@ -54,13 +58,13 @@ class HomViewModel @Inject constructor(
 
     fun changeHasLike(course: Course) {
         viewModelScope.launch {
+            _loadingIds.value = _loadingIds.value + course.id
             try {
-                Log.d(TAG, "changeHasLike: course=${course.id}, current like=${course.hasLike}")
                 repository.changeHasLike(course)
-                Log.d(TAG, "changeHasLike: success for course=${course.id}")
-            } catch (e: Exception) {
-                Log.e(TAG, "changeHasLike: failed for course=${course.id}", e)
+            } finally {
+                _loadingIds.value = _loadingIds.value - course.id
             }
         }
     }
+
 }

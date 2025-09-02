@@ -5,6 +5,7 @@ import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.*
@@ -54,7 +55,14 @@ fun MainScreenContentAndNavGraph() {
     }
 
     Scaffold(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier
+            .fillMaxSize()
+            .systemBarsPadding(),
+        topBar = {
+            if (multiStackNavState.getCurrentRoute() == Screen.HomeScreen.route) {
+                CourseAppBar()
+            }
+        },
         bottomBar = {
             Log.d(TAG, "Showing MultiStackBottomBar for currentTab: $currentTab")
             MultiStackBottomNavigationBar(
@@ -74,7 +82,7 @@ fun MainScreenContentAndNavGraph() {
                 favouriteNavController = favouriteNavController,
                 accountNavController = accountNavController,
                 homeScreenContent = {
-                    HomeScreen(paddingValues, navigateDetailCoures = {
+                    HomeScreen(paddingValues, navigateDetailCourse = {
                         multiStackNavState.navigateInCurrentTab(Screen.CourseDetailScreen.route)
                     })
                 },

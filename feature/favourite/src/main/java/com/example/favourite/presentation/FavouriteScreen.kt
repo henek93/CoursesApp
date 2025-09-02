@@ -16,6 +16,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.domain.entity.Course
 import com.example.ui.components.CourseCard
 import com.example.utils.toDate
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 
 
 @Composable
@@ -24,6 +26,8 @@ fun FavouriteScreen(
 ) {
 
     val screenState by viewModel.screenState.collectAsState()
+    val loadingIds by viewModel.loadingIds.collectAsState()
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -56,7 +60,12 @@ fun FavouriteScreen(
             }
 
             is FavouriteScreenState.Success -> {
-                FavouriteContent(list = (screenState as FavouriteScreenState.Success).data)
+                FavouriteContent(
+                    list = (screenState as FavouriteScreenState.Success).data,
+                    loadingIds = loadingIds,
+                    onFavouriteClick = { course ->
+                        viewModel.changeHasLike(course)
+                    })
             }
         }
     }
@@ -65,9 +74,10 @@ fun FavouriteScreen(
 
 @Composable
 fun FavouriteContent(
-    list: List<Course>
+    list: List<Course>,
+    loadingIds: Set<String>,
+    onFavouriteClick: (Course) -> Unit
 ) {
-
     if (list.isEmpty()) {
         Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
             Text(
@@ -82,8 +92,10 @@ fun FavouriteContent(
                 CourseCard(
                     onCardClick = {},
                     course = list[index],
-                    onFavouriteClick = {},
-                    loadingIds = setOf()
+                    onFavouriteClick = {
+                        onFavouriteClick(list[index])
+                    },
+                    loadingIds = loadingIds
                 )
             }
         }

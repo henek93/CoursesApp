@@ -12,8 +12,7 @@ import kotlinx.coroutines.flow.asSharedFlow
 import javax.inject.Inject
 
 class HomeRepositoryImpl @Inject constructor(
-    private val apiService: ApiService,
-    private val courseDao: CourseDao
+    private val apiService: ApiService, private val courseDao: CourseDao
 ) : HomeRepository {
 
     private val _listCourses = MutableSharedFlow<List<Course>>()
@@ -48,7 +47,7 @@ class HomeRepositoryImpl @Inject constructor(
         if (course.hasLike) {
             courseDao.deleteCourseFromFavourite(course.id)
         } else {
-            courseDao.addCourseToFavourite(course.toModel())
+            courseDao.addCourseToFavourite(course.copy(hasLike = true).toModel())
         }
 
         getCourses()

@@ -2,6 +2,7 @@ package com.example.favourite.data
 
 import com.example.data.local.db.CourseDao
 import com.example.data.local.model.toEntity
+import com.example.data.local.model.toModel
 import com.example.domain.entity.Course
 import com.example.favourite.domain.FavouriteRepository
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -14,9 +15,12 @@ class FavouriteRepositoryImpl @Inject constructor(
     override val courseList = courseDao.getFlowCourses()
 
 
-
     override suspend fun changeHasLike(course: Course) {
-        TODO("Not yet implemented")
+        if (course.hasLike) {
+            courseDao.deleteCourseFromFavourite(course.id)
+        } else {
+            courseDao.addCourseToFavourite(course.copy(hasLike = true).toModel())
+        }
     }
 
 }

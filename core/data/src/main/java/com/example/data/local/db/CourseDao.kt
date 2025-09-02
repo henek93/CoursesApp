@@ -7,9 +7,14 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.example.data.local.model.CourseModel
 import com.example.domain.entity.Course
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface CourseDao {
+
+
+    @Query("SELECT * FROM courses")
+    fun getFlowCourses(): Flow<List<Course>>
 
     @Query("SELECT * FROM courses")
     suspend fun getAll(): List<CourseModel>

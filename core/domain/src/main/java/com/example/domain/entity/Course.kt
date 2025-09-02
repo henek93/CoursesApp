@@ -8,9 +8,9 @@ data class Course(
     val text: String,
     val price: String,
     val rate: Float,
-    val startDate: Date,
+    val startDate: String,
     val hasLike: Boolean,
-    val publishDate: Date
+    val publishDate: String
 )
 
 

@@ -24,9 +24,9 @@ fun Course.toModel() = CourseModel(
     text = text,
     price = price,
     rate = rate,
-    startDate = startDate.formatToRussian(),
+    startDate = startDate,
     hasLike = hasLike,
-    publishDate = publishDate.formatToRussian()
+    publishDate = publishDate
 )
 
 fun CourseModel.toEntity() = Course(
@@ -35,7 +35,7 @@ fun CourseModel.toEntity() = Course(
     text = text,
     price = price,
     rate = rate,
-    startDate = startDate.toDate(),
+    startDate = startDate,
     hasLike = hasLike,
-    publishDate = publishDate.toDate()
+    publishDate = publishDate
 )

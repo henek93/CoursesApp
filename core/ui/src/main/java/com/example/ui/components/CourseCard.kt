@@ -123,7 +123,7 @@ fun RatingAndData(
         Rating(
             rating = course.rate
         )
-        Text(text = course.publishDate.formatToRussian(), fontSize = 16.sp, color = Color.White)
+        Text(text = course.publishDate, fontSize = 16.sp, color = Color.White)
     }
 }
 

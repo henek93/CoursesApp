@@ -11,13 +11,8 @@ class FavouriteRepositoryImpl @Inject constructor(
     private val courseDao: CourseDao,
 ) : FavouriteRepository {
 
-    override val courseList = MutableSharedFlow<List<Course>>()
+    override val courseList = courseDao.getFlowCourses()
 
-
-    override suspend fun getFavouriteCourses() {
-        val localList = courseDao.getAll().map { it.toEntity() }
-        courseList.emit(localList)
-    }
 
 
     override suspend fun changeHasLike(course: Course) {

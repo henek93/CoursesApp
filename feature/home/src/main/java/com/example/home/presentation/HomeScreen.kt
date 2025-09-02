@@ -42,7 +42,9 @@ fun HomeScreen(
         }
 
         is HomeScreenState.Succsed -> {
-            HomeContent(list = (screenState.value as HomeScreenState.Succsed).list)
+            HomeContent(
+                list = (screenState.value as HomeScreenState.Succsed).list,
+                onFavouriteClick = { viewModel.changeHasLike(it) })
 
         }
 
@@ -56,7 +58,8 @@ fun HomeScreen(
 
 @Composable
 fun HomeContent(
-    list: List<Course>
+    list: List<Course>,
+    onFavouriteClick: (Course) -> Unit
 ) {
     LazyColumn(
         modifier = Modifier
@@ -76,7 +79,6 @@ fun HomeContent(
                 )
                 Spacer(modifier = Modifier.width(4.dp))
                 AppIcon(
-
                     icon = AppIcons.DoubleArrow,
                     color = MaterialTheme.colorScheme.primary,
                     size = 20.sp
@@ -86,7 +88,9 @@ fun HomeContent(
 
         }
         items(count = list.size) { index ->
-            CourseCard(onCardClick = {}, course = list[index], onFavouriteClick = {})
+            CourseCard(onCardClick = {}, course = list[index], onFavouriteClick = {
+                onFavouriteClick(list[index])
+            })
         }
     }
 }

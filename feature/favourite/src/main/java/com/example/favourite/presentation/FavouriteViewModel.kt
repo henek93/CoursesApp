@@ -18,7 +18,6 @@ class FavouriteViewModel @Inject constructor(
 
     init {
         collectCourses()
-        getCourses()
     }
 
     private fun collectCourses() {
@@ -29,15 +28,6 @@ class FavouriteViewModel @Inject constructor(
         }
     }
 
-    private fun getCourses() {
-        _screenState.value = FavouriteScreenState.Loading
-        viewModelScope.launch {
-            try {
-                repository.getFavouriteCourses()
-            } catch (e: Exception) {
-                _screenState.value = FavouriteScreenState.Error(e.message ?: "Unknown Error")
-            }
-        }
-    }
+
 
 }
